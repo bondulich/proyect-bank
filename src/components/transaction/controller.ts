@@ -7,7 +7,6 @@ export class TransactionController {
    * @param {Res} res
    */
 
-  
   static get = async (req, res, next) => {
     try {
       const data = await TransactionServices.get(req);

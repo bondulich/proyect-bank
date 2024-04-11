@@ -8,7 +8,8 @@ export class TransactionServices {
   constructor() {}
 
   static async get(req) {
-    
+    const { idAccount } = req.params;
+    return await transactionRepository.find({ where: {account: idAccount} });
   }
 
   static async ingress(req) {
