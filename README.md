@@ -1,5 +1,11 @@
 # Proyect bank
 
+## Instalación y arranque
+
+`docker-compose build`
+
+`docker-compose up`
+
 Se ejecuta con Node 18
 
 ### Esquema DB
