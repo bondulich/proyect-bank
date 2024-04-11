@@ -2,24 +2,19 @@ import express from "express";
 import { UserController } from "./components/user/controller";
 import { UtilsController } from "./components/utils/controller";
 import { CardController } from "./components/card/controller";
-import { isValidCardMiddleware } from "./components/card/middleware";
+import { isValidCardMiddleware, isValidLimitCardMiddleware } from "./components/card/middleware";
+import { TransactionController } from "./components/transaction/controller";
 
 export const routes = express.Router();
 
 // Consultar movimientos de una cuenta específica
-routes.get('/transacciones/:id_cuenta', (req, res) => {
-  // Lógica para consultar movimientos
-});
+routes.get('/transacciones/:idAccount', [isValidCardMiddleware], TransactionController.get);
 
 // Sacar dinero de la cuenta asociada a la tarjeta
-routes.post('/retirar-dinero', (req, res) => {
-  // Lógica para retirar dinero
-});
+routes.post('/retirar-dinero', [isValidCardMiddleware, isValidLimitCardMiddleware], TransactionController.egress);
 
 // Ingresar dinero en la cuenta asociada a la tarjeta
-routes.post('/ingresar-dinero', (req, res) => {
-  // Lógica para ingresar dinero
-});
+routes.post('/ingresar-dinero', [isValidCardMiddleware], TransactionController.ingress);
 
 // Hacer transferencias a otras cuentas
 routes.post('/transferir', [isValidCardMiddleware], (req, res) => {
@@ -27,10 +22,9 @@ routes.post('/transferir', [isValidCardMiddleware], (req, res) => {
 });
 
 // Activar la tarjeta
-// parms=> cardnumber: string
+// parms => cardnumber: string
 routes.put('/activar-tarjeta', CardController.activate);
 
 // Cambiar el código PIN de la tarjeta
-routes.put('/cambiar-pin', (req, res) => {
-  // Lógica para cambiar el PIN
-});
+// params => cardnumber:string, pin:string
+routes.put('/cambiar-pin', [isValidCardMiddleware], CardController.changePIN);
