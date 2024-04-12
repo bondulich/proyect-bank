@@ -1,6 +1,4 @@
 import express from "express";
-import { UserController } from "./components/user/controller";
-import { UtilsController } from "./components/utils/controller";
 import { CardController } from "./components/card/controller";
 import { isValidCardMiddleware, isValidLimitCardMiddleware } from "./components/card/middleware";
 import { TransactionController } from "./components/transaction/controller";
